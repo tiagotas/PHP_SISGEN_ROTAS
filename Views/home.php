@@ -8,8 +8,8 @@
     <body>
         <?php include 'includes/cabecalho.php' ?>
 
-        <main>
-            tela inicial.
+        <main class="container">
+            <h2>Dashboard</h2>
         </main>
 
         <?php include 'includes/rodape.php' ?>
