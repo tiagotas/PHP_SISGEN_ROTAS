@@ -1,5 +1,9 @@
 <?php
 
+namespace App\DAO;
+
+use \PDO;
+
 class MySQL extends PDO {
 
     private $host    = "localhost";

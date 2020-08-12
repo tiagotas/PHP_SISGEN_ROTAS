@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Controller;
+
+use App\DAO\CategoriaDAO;
+
 class CategoriaController extends Controller {
 
     public static function index() 
@@ -10,7 +14,7 @@ class CategoriaController extends Controller {
         $lista_categorias = $categoria_dao->getAllRows();
         $total_categorias = count($lista_categorias);
 
-        include 'Views/modulos/categoria/listar_categorias.php';
+        include PATH_VIEW . 'modulos/categoria/listar_categorias.php';
     }
 
     public static function ver() 
@@ -23,7 +27,7 @@ class CategoriaController extends Controller {
 
             $dados_categoria = $categoria_dao->getById($_GET['id']);
 
-            include 'Views/modulos/categoria/cadastrar_categoria.php';
+            include PATH_VIEW . 'modulos/categoria/cadastrar_categoria.php';
         } else 
             header("Location: /categoria"); 
     }
@@ -32,7 +36,7 @@ class CategoriaController extends Controller {
     {
         parent::isProtected();
 
-        include 'Views/modulos/categoria/cadastrar_categoria.php';
+        include PATH_VIEW . 'modulos/categoria/cadastrar_categoria.php';
     }
 
     public static function salvar() 

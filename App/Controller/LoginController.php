@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Controller;
+
+use App\DAO\LoginDAO;
+
 class LoginController extends Controller {
 
     public static function login()

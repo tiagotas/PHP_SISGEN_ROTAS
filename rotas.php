@@ -1,5 +1,8 @@
 <?php
 
+use App\Controller\{ DashboardController, LoginController, 
+                    ProdutoController, CategoriaController };
+
 try {
 
     switch($uri_parse)
@@ -27,23 +30,23 @@ try {
 
         // Rotas para trabalhar com produtos.
         case '/produto':       
-            ControllerProduto::index();
+            ProdutoController::index();
         break;
 
         case '/produto/cadastrar':
-            ControllerProduto::cadastrar();
+            ProdutoController::cadastrar();
         break;
 
         case '/produto/salvar':
-            ControllerProduto::salvar();
+            ProdutoController::salvar();
         break;
 
         case '/produto/ver':
-            ControllerProduto::ver();                              
+            ProdutoController::ver();                              
         break;
 
         case '/produto/excluir':
-            ControllerProduto::excluir();
+            ProdutoController::excluir();
         break;
 
 
