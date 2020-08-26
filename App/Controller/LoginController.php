@@ -8,7 +8,9 @@ class LoginController extends Controller {
 
     public static function login()
     {
-        include 'Views/login.php';
+        $usuario = (isset($_COOKIE['sisgen_user'])) ? $_COOKIE['sisgen_user'] : '';
+
+        include PATH_VIEW . 'login.php';
     }
 
 
@@ -26,14 +28,36 @@ class LoginController extends Controller {
             $_SESSION["usuario_logado"] = array('id' => $resultado->id, 
                                                 'nome' => $resultado->nome);
 
+            if(isset($_POST['remember']))
+                self::remember($usuario);                                    
+
             header("Location: /");
 
         } else 
             header("Location: /login?fail=true");        
     }
 
+
+    private static function remember($user) {
+
+        $validade = strtotime("+1 month");
+
+        setcookie("sisgen_user", $user, $validade, "/", "", false, true);
+    }
+
+    private static function forget() {
+
+        $validade = time() - 3600;
+
+        setcookie("sisgen_user", "", $validade, "/", "", false, true);
+    }
+
+
+
     public static function sair()
     {
+        self::forget();
+        
         unset($_SESSION["usuario_logado"]);
 
         parent::isProtected();

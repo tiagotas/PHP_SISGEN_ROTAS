@@ -28,7 +28,7 @@
 
                         <div class="form-group">
                             <label for="user">Usuário: </label>
-                            <input id="user" name="user" class="form-control" type="text" />
+                            <input id="user" name="user" class="form-control" type="text" value="<?= $usuario ?>" />
                         </div>
 
                         <div class="form-group">
@@ -36,6 +36,13 @@
                             <input id="pass" name="pass" class="form-control" type="password" />
                             </label>
                         </div>
+
+                        <div class="form-group">                            
+                            <input id="remember" name="remember"  type="checkbox" />
+                            <label for="remember">Lembrar meu usuário. </label>
+                            </label>
+                        </div>
+
                         <button type="submit" class="btn btn-success">Entrar</button>
                     </form>
                 </div>
