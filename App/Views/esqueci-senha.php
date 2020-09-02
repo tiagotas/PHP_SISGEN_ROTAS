@@ -1,7 +1,7 @@
 <html lang="pt-br">
 
 <head>
-    <title>LOGIN</title>
+    <title>Esqueci a Senha</title>
     <meta charset="utf-8" />
 
     <?php include PATH_VIEW . 'includes/css_config.php' ?>
@@ -24,27 +24,23 @@
 
                 <div style="margin:0 auto; max-width:40%">
 
-                    <form method="post" action="/autenticar">
+                    <form method="post" action="/enviar-nova-senha">
+
+                        <?php if(isset($retorno)): ?>
+                        <div class="alert alert-primary" role="alert">
+                            <?=  $retorno ?>
+                        </div>
+                        <?php endif ?>
+                        
 
                         <div class="form-group">
-                            <label for="user">Usuário: </label>
-                            <input id="user" name="user" class="form-control" type="text" value="<?= $usuario ?>" />
+                            <label for="email">E-mail: </label>
+                            <input id="email" name="email" class="form-control" type="email" />
                         </div>
 
-                        <div class="form-group">
-                            <label for="pass">Senha: </label>
-                            <input id="pass" name="pass" class="form-control" type="password" />
-                            </label>
-                        </div>
+                        <button type="submit" class="btn btn-success">Enviar Nova Senha</button>
 
-                        <div class="form-group">                            
-                            <input id="remember" name="remember"  type="checkbox" />
-                            <label for="remember">Lembrar meu usuário. </label>
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn btn-success">Entrar</button>
-                        <a href="/esqueci-a-senha" class="btn">Esqueci a senha</a>
+                        <a href="/login" class="btn">Voltar</a>
                     </form>
                 </div>
             </main>
