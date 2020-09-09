@@ -16,7 +16,7 @@ class UsuarioController extends Controller
 
         require PATH_VIEW . '/modulos/usuario/meus-dados.php';
     }
-    
+
 
     public static function salvar()
     {
