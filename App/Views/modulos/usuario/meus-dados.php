@@ -17,25 +17,45 @@
                 Meus Dados
             </h4>
 
+            <?php if (isset($retorno['positivo'])) : ?>
+                <div class="alert alert-success" role="alert">
+                    <?= $retorno['positivo'] ?>
+                </div>
+            <?php endif ?>
+
+            <?php if (isset($retorno['senha_incorreta'])) : ?>
+                <div class="alert alert-danger" role="alert">
+                    <?= $retorno['senha_incorreta'] ?>
+                </div>
+            <?php endif ?>
+
+            <?php if (isset($retorno['senha_confirmacao_incorreta'])) : ?>
+                <div class="alert alert-danger" role="alert">
+                    <?= $retorno['senha_confirmacao_incorreta'] ?>
+                </div>
+            <?php endif ?>
+
+
+
             <form method="post" action="/usuario/salvar">
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="nome">Nome: </label>
-                        <input name="nome" class="form-control" value="<?= $meus_dados->nome ?>" type="text" />
+                        <input name="nome" class="form-control" value="<?= $meus_dados->nome ?>" type="text" required />
                     </div>
                     <div class="form-group col-md-6">
                         <label for="email">E-mail: </label>
-                        <input name="email" class="form-control" value="<?= $meus_dados->email ?>" type="email" />
+                        <input name="email" class="form-control" value="<?= $meus_dados->email ?>" type="email" required />
                     </div>
                 </div>
 
-                <fieldset>
-                    <legend>Trocar a Senha: </legend>
+                <fieldset class="border rounded p-3 mb-3">
+                    <legend class="form-label col-auto">Trocar a Senha: </legend>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="nova_senha">Nova Senha: </label>
-                            <input name="nova_senha" class="form-control" type="password" />
+                            <input name="nova_senha" class="form-control" type="password" placeholder="Alteração de senha é opcional" />
                         </div>
                         <div class="form-group col-md-6">
                             <label for="confirmacao_nova_senha">Confirme a Nova Senha: </label>
@@ -44,12 +64,11 @@
                     </div>
                 </fieldset>
 
-                <fieldset>
-                    <legend>Senha Atual: </legend>
+                <fieldset class="border rounded p-3 mb-3 bg-light">
+                    <legend class="form-label col-auto bg-light">Senha Atual: </legend>
 
-                    <div class="form-group">
-                        <label for="senha_atual">Senha Atual: </label>
-                        <input name="senha_atual" class="form-control" type="password" />
+                    <div class="form-group border border-danger p-3 p-3 mb-5 rounded">
+                        <input name="senha_atual" class="form-control" type="password" placeholder="Informe sua senha atual para realizar alterações no seu cadastro:" required />
                     </div>
                 </fieldset>
 
