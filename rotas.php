@@ -1,7 +1,8 @@
 <?php
 
 use App\Controller\{ DashboardController, LoginController, 
-                    ProdutoController, CategoriaController };
+                    ProdutoController, CategoriaController, 
+                    UsuarioController };
 
 try {
 
@@ -33,6 +34,17 @@ try {
         case '/sair':
             LoginController::sair();
         break;
+
+
+        // Rotas para trabalhar com o usuário
+        case '/usuario/meus-dados':            
+            UsuarioController::meusDados();
+        break;
+
+        case '/usuario/salvar':
+            UsuarioController::salvar();
+        break;
+
 
 
 

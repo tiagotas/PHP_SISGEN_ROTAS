@@ -9,8 +9,13 @@
         <div class="col-sm">
             <fieldset>
                 <legend>Dados do usuário</legend>
-                Bem-vindo <strong> <?= App\Controller\LoginController::getNameOfUser() ?> </strong> 
-                
+                Bem-vindo
+                <strong>
+                    <a href="/usuario/meus-dados" class="btn">
+                        <?= App\Controller\LoginController::getNameOfUser() ?>
+                    </a>
+                </strong> 
+
                 <a class="btn btn-dark" href="/sair">Sair</a>
             </fieldset>
         </div>
@@ -24,8 +29,8 @@
 
         <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"> 
-                    <a class="nav-link" href="/"> Tela Inicial </a> 
+                <li class="nav-item">
+                    <a class="nav-link" href="/"> Tela Inicial </a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -33,9 +38,9 @@
                         Categoria
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/categoria/cadastrar">Cadastrar Categoria</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/categoria">Listar Categorias</a>
+                        <a class="dropdown-item" href="/categoria/cadastrar">Cadastrar Categoria</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/categoria">Listar Categorias</a>
                     </div>
                 </li>
 
@@ -44,9 +49,9 @@
                         Marca
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/marca/cadastrar">Cadastrar Marca</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/marca">Lista de Marcas</a>
+                        <a class="dropdown-item" href="/marca/cadastrar">Cadastrar Marca</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/marca">Lista de Marcas</a>
                     </div>
                 </li>
 
@@ -57,7 +62,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/produto/cadastrar">Cadastrar Produto</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/produto">Lista de Produtos</a>                        
+                        <a class="dropdown-item" href="/produto">Lista de Produtos</a>
                     </div>
                 </li>
 
