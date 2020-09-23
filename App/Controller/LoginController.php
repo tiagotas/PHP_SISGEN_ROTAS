@@ -68,10 +68,7 @@ class LoginController extends Controller {
 
         if($resultado !== false)
         {
-            $_SESSION["usuario_logado"] = array('id' => $resultado->id, 
-                                                'nome' => $resultado->nome,
-                                                'grupo' => $resultado->nome_grupo,
-                                                'permissoes_grupo' => $resultado->permissoes_grupo);
+            $_SESSION["usuario_logado"] = (array) $resultado;
 
             if(isset($_POST['remember']))
                 self::remember($usuario);                                    

@@ -44,10 +44,14 @@ class UsuarioGrupoDAO extends DAO {
      */
     public function insert($dados) {
 
-        $sql = "INSERT INTO grupos (descricao) VALUES (?)";
+        $sql = "INSERT INTO grupos (descricao, cadastrar, editar, listar, excluir) VALUES (?, ?, ?, ?, ?)";
         
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(1, $dados['descricao']);
+        $stmt->bindValue(2, $dados['cadastrar']);
+        $stmt->bindValue(3, $dados['editar']);
+        $stmt->bindValue(4, $dados['listar']);
+        $stmt->bindValue(5, $dados['excluir']);
         $stmt->execute();
     }
 
@@ -57,11 +61,17 @@ class UsuarioGrupoDAO extends DAO {
      */
     public function update($dados) {
 
-        $sql = "UPDATE grupos SET descricao = ? WHERE id = ? ";
+        $sql = "UPDATE grupos 
+                SET descricao = ?, cadastrar = ?, editar = ?, listar = ?, excluir = ? 
+                WHERE id = ? ";
         
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(1, $dados['descricao']);
-        $stmt->bindValue(2, $dados['id']);
+        $stmt->bindValue(2, $dados['cadastrar']);
+        $stmt->bindValue(3, $dados['editar']);
+        $stmt->bindValue(4, $dados['listar']);
+        $stmt->bindValue(5, $dados['excluir']);
+        $stmt->bindValue(6, $dados['id']);
         $stmt->execute();
     }
 

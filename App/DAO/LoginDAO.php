@@ -25,7 +25,7 @@ class LoginDAO extends DAO {
     public function getUserByUserAndPass($usuario, $senha) 
     {
         $sql = "SELECT u.id, u.nome, u.id_grupo, 
-                       g.descricao AS nome_grupo  
+                       g.descricao AS grupo, g.cadastrar, g.editar, g.listar, g.excluir
                 FROM usuarios u
                 JOIN grupos g ON (g.id = u.id_grupo)
                 WHERE u.usuario=? AND u.senha= sha1(?) ";
@@ -37,24 +37,9 @@ class LoginDAO extends DAO {
 
         $dados_usuario = $stmt->fetchObject();
 
-        if(is_object($dados_usuario))
-            $dados_usuario->permissoes_grupo = $this->getGroupPermissionsById($dados_usuario->id_grupo);
+       /* if(is_object($dados_usuario))
+            $dados_usuario->permissoes_grupo = $this->getGroupPermissionsById($dados_usuario->id_grupo);*/
 
         return $dados_usuario;            
-    }
-
-
-    private function getGroupPermissionsById($id) {
-
-        $sql = "SELECT cadastrar, editar, listar, excluir
-                FROM grupos_permissoes gp 
-                WHERE gp.id_grupo=? ";
-
-        $stmt = $this->conexao->prepare($sql);
-        $stmt->bindValue(1, $id);
-        $stmt->execute();
-
-        return $stmt->fetchObject(); 
-
     }
 }

@@ -44,8 +44,12 @@ class UsuarioGrupoController extends Controller {
 
         $grupo_dao = new UsuarioGrupoDAO();
     
-        $dados_para_salvar= array(
+        $dados_para_salvar = array(
             'descricao' => $_POST["descricao"],
+            'cadastrar' => isset($_POST["cadastrar"]) ? 'S' : 'N',
+            'editar'    => isset($_POST["editar"]) ? 'S' : 'N',
+            'listar'    => isset($_POST["listar"]) ? 'S' : 'N',
+            'excluir'   => isset($_POST["excluir"]) ? 'S' : 'N'
         );
     
         if(isset($_POST['id'])) {
