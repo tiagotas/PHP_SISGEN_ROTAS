@@ -15,7 +15,8 @@ class LoginController extends Controller {
         include PATH_VIEW . 'login.php';
     }
 
-    public static function esqueciSenha() {
+    public static function esqueciSenha() 
+    {
 
         include PATH_VIEW . 'esqueci-senha.php';
     }
@@ -68,10 +69,14 @@ class LoginController extends Controller {
         if($resultado !== false)
         {
             $_SESSION["usuario_logado"] = array('id' => $resultado->id, 
-                                                'nome' => $resultado->nome);
+                                                'nome' => $resultado->nome,
+                                                'grupo' => $resultado->nome_grupo,
+                                                'permissoes_grupo' => $resultado->permissoes_grupo);
 
             if(isset($_POST['remember']))
                 self::remember($usuario);                                    
+
+            //var_dump($_SESSION["usuario_logado"]);
 
             header("Location: /");
 
@@ -80,7 +85,8 @@ class LoginController extends Controller {
     }
 
 
-    private static function remember($user) {
+    private static function remember($user) 
+    {
 
         $validade = strtotime("+1 month");
 
@@ -106,9 +112,14 @@ class LoginController extends Controller {
     }
 
     
-    public static function getNameOfUser()
+    public static function getNameOfCurrentUser()
     {
         return $_SESSION['usuario_logado']['nome'];
+    }
+
+    public static function getGrupOfCurrentUser()
+    {
+        return $_SESSION['usuario_logado']['grupo'];
     }
 
     public static function updateNameOfCurrentUser($name)

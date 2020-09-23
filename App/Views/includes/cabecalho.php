@@ -1,20 +1,31 @@
+<?php
+
+use App\Controller\LoginController;
+
+$usuario = LoginController::getNameOfCurrentUser();
+$grupo   = LoginController::getGrupOfCurrentUser();
+
+?>
+
 <header class="container mt-3">
     <div class="row mb-3">
-        <div class="col-md-9">
+        <div class="col-md-7">
             <h1>
                 SISGEN
                 <small>Sistema de Gestão</small>
             </h1>
         </div>
-        <div class="col-sm">
+        <div class="col-sm-5" >
             <fieldset>
                 <legend>Dados do usuário</legend>
                 Bem-vindo
                 <strong>
                     <a href="/usuario/meus-dados" class="btn btn-default">
-                        <?= App\Controller\LoginController::getNameOfUser() ?>
-                    </a>
-                </strong> 
+                        <?= $usuario  ?>
+                    </a>                    
+                </strong>                 
+                        Grupo: <?= $grupo  ?>
+                    <br />
 
                 <a class="btn btn-dark" href="/sair">Sair</a>
             </fieldset>
