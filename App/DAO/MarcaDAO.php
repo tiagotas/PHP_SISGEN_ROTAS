@@ -34,12 +34,7 @@ class MarcaDAO extends DAO {
         $stmt = $this->conexao->prepare("SELECT * FROM marca");
         $stmt->execute();
 
-        $arr_marcas = array();
-
-        while($c = $stmt->fetchObject())
-            $arr_marcas[] = $c;
-
-        return $arr_marcas;
+        return $stmt->fetchAll(\PDO::FETCH_CLASS);
     }
 
 

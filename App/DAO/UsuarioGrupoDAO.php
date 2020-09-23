@@ -2,10 +2,10 @@
 
 namespace App\DAO;
 
-class CategoriaDAO extends DAO {
+class UsuarioGrupoDAO extends DAO {
 
     /**
-     * Cria uma novo objeto para fazer o CRUD de Categorias
+     * Cria uma novo objeto para fazer o CRUD de Grupos de Usuário.
      */
     public function __construct()
     {
@@ -14,11 +14,11 @@ class CategoriaDAO extends DAO {
 
 
     /**
-     * Retorna um registro específico da tabela Categoria
+     * Retorna um registro específico da tabela Grupo de Usuário
      */
     public function getById($id) {
 
-        $stmt = $this->conexao->prepare("SELECT * FROM categoria WHERE id = ?");
+        $stmt = $this->conexao->prepare("SELECT * FROM grupos WHERE id = ?");
         $stmt->bindValue(1, $id);
         $stmt->execute();
 
@@ -27,11 +27,11 @@ class CategoriaDAO extends DAO {
 
 
     /**
-     * Retorna todos os registros da tabela Categoria.
+     * Retorna todos os registros da tabela 
      */
     public function getAllRows() {
         
-        $stmt = $this->conexao->prepare("SELECT * FROM categoria");
+        $stmt = $this->conexao->prepare("SELECT * FROM grupos");
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_CLASS);
@@ -42,12 +42,12 @@ class CategoriaDAO extends DAO {
     /**
      * Método que insere uma categoria na tabela Categoria.
      */
-    public function insert($dados_categoria) {
+    public function insert($dados) {
 
-        $sql = "INSERT INTO categoria (descricao) VALUES (?)";
+        $sql = "INSERT INTO grupos (descricao) VALUES (?)";
         
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindValue(1, $dados_categoria['descricao']);
+        $stmt->bindValue(1, $dados['descricao']);
         $stmt->execute();
     }
 
@@ -55,13 +55,13 @@ class CategoriaDAO extends DAO {
     /**
      * Atualiza um registro na tabela Categoria.
      */
-    public function update($dados_categoria) {
+    public function update($dados) {
 
-        $sql = "UPDATE categoria SET descricao = ? WHERE id = ? ";
+        $sql = "UPDATE grupos SET descricao = ? WHERE id = ? ";
         
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindValue(1, $dados_categoria['descricao']);
-        $stmt->bindValue(2, $dados_categoria['id']);
+        $stmt->bindValue(1, $dados['descricao']);
+        $stmt->bindValue(2, $dados['id']);
         $stmt->execute();
     }
 
@@ -71,7 +71,7 @@ class CategoriaDAO extends DAO {
      */
     public function delete($id) {
 
-        $sql = "DELETE FROM categoria WHERE id = ? ";
+        $sql = "DELETE FROM grupos WHERE id = ? ";
         
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(1, $id);

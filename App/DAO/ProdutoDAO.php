@@ -34,12 +34,7 @@ class ProdutoDAO extends DAO {
         $stmt = $this->conexao->prepare("SELECT * FROM produto");
         $stmt->execute();
 
-        $arr_produtos = array();
-
-        while($c = $stmt->fetchObject())
-            $arr_produtos[] = $c;
-
-        return $arr_produtos;
+        return $stmt->fetchAll(\PDO::FETCH_CLASS);
     }
 
 
