@@ -1,105 +1,113 @@
 <html>
-    <head>
-        <title>Cadastro de Produtos</title>
 
-        <?php include PATH_VIEW . 'includes/css_config.php' ?>
+<head>
+    <title>Cadastro de Produtos</title>
 
-    </head>
+    <?php include PATH_VIEW . 'includes/css_config.php' ?>
 
-    <body>
-        <?php include PATH_VIEW . 'includes/cabecalho.php' ?>
+</head>
 
-        <main class="container mt-3">
+<body>
+    <?php include PATH_VIEW . 'includes/cabecalho.php' ?>
 
-            <h4>
-                Cadastro de Produto
-            </h4>
-            
-            <form method="post" action="/produto/salvar">
+    <main class="container mt-3">
 
-                <div class="form-group">  
-                    <label for="descricao">Descrição (Nome) do produto:</label>
-                    <input class="form-control" id="descricao" name="descricao" type="text" value="<?= isset($dados_produto) ? $dados_produto->descricao : "" ?>" />     
+        <h4>
+            Cadastro de Produto
+        </h4>
+
+        <?php if ($model->hasValidationErrors()) : ?>
+
+            <div class="alert alert-danger" role="alert">
+
+                <?php foreach ($model->getValidationErrors() as $error) :
+
+                    echo $error . "<br />";
+
+                endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+
+
+
+        <form method="post" action="/produto/salvar">
+
+            <div class="form-group">
+                <label for="descricao">Descrição (Nome) do produto:</label>
+                <input class="form-control" id="descricao" name="descricao" type="text" value="<?= $model->descricao ?>" />
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="preco">Preço:</label>
+                    <input class="form-control" id="preco" name="preco" type="number" value="<?= $model->preco ?>" />
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-6">  
-                        <label for="preco">Preço:</label>
-                        <input class="form-control" id="preco" name="preco" type="number" value="<?= isset($dados_produto) ? $dados_produto->preco : "" ?>" />
-                    </div>
+                <div class="form-group col-md-6">
+                    <label for="foto">Foto:</label>
+                    <input class="form-control-file" id="foto" name="foto" type="file" />
+                </div>
+            </div>
 
-                    <div class="form-group col-md-6">  
-                        <label for="foto">Foto:</label>
-                        <input class="form-control-file" id="foto" name="foto" type="file" />
-                    </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="id_categoria">Categoria:</label>
+                    <select id="id_categoria" name="id_categoria" class="form-control">
+                        <option value="">Selecione a categoria</option>
+
+                        <?php foreach($model->lista_categorias as $categoria):                       
+
+                            $selecinado = ($categoria->id == $model->id_categoria) ? "selected" : "";
+                        ?>
+
+                            <option value="<?= $categoria->id ?>" <?= $selecinado ?>>
+                                <?= $categoria->descricao  ?>
+                            </option>
+
+                        <?php endforeach ?>
+
+                    </select>
                 </div>
 
+                <div class="form-group col-md-6">
+                    <label for="id_marca">Marca:</label>
+                    <select id="id_marca" name="id_marca" class="form-control">
+                        <option value="">Selecione a marca</option>
 
-                <div class="form-row">
-                    <div class="form-group col-md-6"> 
-                        <label for="id_categoria">Categoria:</label>
-                        <select id="id_categoria" name="id_categoria" class="form-control">
-                                <option>Selecione a categoria</option>
+                        <?php foreach($model->lista_marcas as $marca):
 
-                                <?php 
-                                
-                                    for($i=0; $i<$total_categorias; $i++):
-                                        
-                                        $selecinado = "";
+                            $selecinado = ($marca->id == $model->id_marca) ? "selected" : "";
 
-                                        if(isset($dados_produto->id))
-                                            $selecinado = ($lista_categorias[$i]->id == $dados_produto->id_categoria) ? "selected" : "";
-                                    ?>
+                        ?>
+                            <option value="<?= $marca->id ?>" <?= $selecinado ?>>
+                                <?= $marca->descricao  ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
 
-                                <option value="<?= $lista_categorias[$i]->id ?>" <?= $selecinado ?> >
-                                    <?= $lista_categorias[$i]->descricao  ?> 
-                                </option>
-
-                                <?php endfor ?>
-
-                            </select>
-                    </div>
-                        
-                    <div class="form-group col-md-6">
-                        <label for="id_marca">Marca:</label>
-                        <select id="id_marca"  name="id_marca" class="form-control">
-                                <option>Selecione a marca</option>
-
-                                <?php for($i=0; $i<$total_marcas; $i++): 
-                                    
-                                    $selecinado = "";
-
-                                    if(isset($dados_produto->id))
-                                        $selecinado = ($lista_marcas[$i]->id == $dados_produto->id_marca) ? "selected" : "";
-                                    
-                                ?>
-                                <option value="<?= $lista_marcas[$i]->id ?>" <?= $selecinado ?>> 
-                                    <?= $lista_marcas[$i]->descricao  ?> 
-                                </option>
-                                <?php endfor ?>
-                            </select>
-                        
-                    </div>
                 </div>
+            </div>
 
-                <?php if(isset($dados_produto)): ?>
-                        <input name="id" type="hidden" value="<?= $dados_produto->id ?>" />
+            <?php if ($model->id !== null) : ?>
+                <input name="id" type="hidden" value="<?= $model->id ?>" />
 
-                        <a class="btn btn-danger" href="/produto/excluir?id=<?= $dados_produto->id ?>">
-                            EXCLUIR
-                        </a>
+                <a class="btn btn-danger" href="/produto/excluir?id=<?= $model->id ?>">
+                    EXCLUIR
+                </a>
 
-                    <?php endif ?>
+            <?php endif ?>
 
-                <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="submit" class="btn btn-success">Salvar</button>
 
-            </form>
-        </main>
+        </form>
+    </main>
 
 
-        <?php include PATH_VIEW . 'includes/rodape.php' ?>
-        <?php include PATH_VIEW . 'includes/js_config.php' ?>
+    <?php include PATH_VIEW . 'includes/rodape.php' ?>
+    <?php include PATH_VIEW . 'includes/js_config.php' ?>
 
-    </body>
+</body>
 
 </html>

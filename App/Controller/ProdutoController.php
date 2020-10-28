@@ -2,17 +2,30 @@
 
 namespace App\Controller;
 
-use App\DAO\{ ProdutoDAO, CategoriaDAO, MarcaDAO };
+use App\DAO\{ProdutoDAO, CategoriaDAO, MarcaDAO};
+use App\Model\ProdutoModel;
+use Exception;
 
-class ProdutoController extends Controller {
+class ProdutoController extends Controller
+{
 
     public static function index()
     {
         parent::isProtected();
 
-        $produto_dao = new ProdutoDAO();
-        $lista_produtos = $produto_dao->getAllRows();
-        $total_produtos = count($lista_produtos);
+        $arr_produtos = array();
+
+        try {
+
+            $model = new ProdutoModel();
+
+            $arr_produtos = $model->getAll();
+
+        } catch (Exception $e) {
+
+           // echo $e->getMessage();
+
+        }
 
         include PATH_VIEW . 'modulos/produto/listar_produtos.php';
     }
@@ -21,66 +34,73 @@ class ProdutoController extends Controller {
     {
         parent::isProtected();
 
-        if(isset($_GET['id']))
-        {
-            $produto_dao = new ProdutoDAO();
+        try {
+            if (isset($_GET['id'])) {
+                $model = new ProdutoModel();
 
-            $dados_produto = $produto_dao->getById($_GET['id']);
+                $dados = $model->getById((int) $_GET['id']);
 
-            include PATH_VIEW . 'modulos/produto/cadastrar_produto.php';
+                self::cadastrar($dados);
+            } else {
+                header("location: /produto");
+            }
+        } catch (Exception $e) {
 
-        } else 
-            header("Location: /produto"); 
+            self::cadastrar($model);
+        }
     }
 
-    public static function cadastrar()
+    public static function cadastrar(ProdutoModel $_model = null)
     {
         parent::isProtected();
 
-        $categoria_dao = new CategoriaDAO();
-        $lista_categorias = $categoria_dao->getAllRows();
-        $total_categorias = count($lista_categorias);
+        $model = ($_model == null) ? new ProdutoModel() : $_model;
 
-        $marca_dao = new MarcaDAO();
-        $lista_marcas = $marca_dao->getAllRows();
-        $total_marcas = count($lista_marcas);
+        $model->lista_categorias = $model->getAllCategorias();
+        $model->lista_marcas = $model->getAllMarcas();
 
         include PATH_VIEW . 'modulos/produto/cadastrar_produto.php';
     }
 
-    public static function salvar() 
+    public static function salvar()
     {
         parent::isProtected();
 
-        $produto_dao = new ProdutoDAO();
+        try {
+            $model = new ProdutoModel();
 
-        $dados_para_salvar= array(
-            'id_marca' => $_POST["id_marca"],
-            'id_categoria' => $_POST["id_categoria"],
-            'descricao' => $_POST["descricao"],
-            'preco' => $_POST["preco"],
-        );
+            $model->setId(isset($_POST['id']) ? $_POST['id'] : null);
+            $model->setDescricao($_POST["descricao"]);
+            $model->setPreco($_POST["preco"]);
+            $model->setCategoria((int) $_POST["id_categoria"]);
+            $model->setMarca((int) $_POST["id_marca"]);
 
-        if(isset($_POST['id'])) {
+            $model->save();
 
-            $dados_para_salvar['id'] = $_POST["id"];
+            header("Location: /produto");
+        } catch (Exception $e) {
 
-            $produto_dao->update($dados_para_salvar);
-        } else {
-
-            $produto_dao->insert($dados_para_salvar);
-        } 
-
-        header("Location: /produto");
+            self::cadastrar($model);
+        }
     }
 
-    public static function excluir() 
+    public static function excluir()
     {
         parent::isProtected();
-        
-        $produto_dao = new ProdutoDAO();
-        $produto_dao->delete($_GET['id']);
-        
-        header("Location: /produto");
+
+        if (isset($_GET['id'])) {
+            try {
+
+                $model = new ProdutoModel();
+
+                $model->delete((int) $_GET['id']);
+
+                header("Location: /produto");
+            } catch (Exception $e) {
+
+                self::cadastrar($model);
+            }
+        } else
+            header("Location: /produto ");
     }
 }
